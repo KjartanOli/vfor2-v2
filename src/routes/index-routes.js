@@ -4,27 +4,27 @@ import { getGames } from '../lib/db.js';
 export const indexRouter = express.Router();
 
 async function indexRoute(req, res) {
-  return res.render('index', {
-    title: 'Forsíða',
-    time: new Date().toISOString(),
-  });
+	return res.render('index', {
+		title: 'Forsíða',
+		time: new Date().toISOString(),
+	});
 }
 
 async function leikirRoute(req, res) {
-  const games = await getGames();
+	const games = await getGames();
 
-  return res.render('leikir', {
-    title: 'Leikir',
-    games,
-    time: new Date().toISOString(),
-  });
+	return res.render('leikir', {
+		title: 'Leikir',
+		games,
+		time: new Date().toISOString(),
+	});
 }
 
 async function stadaRoute(req, res) {
-  return res.render('stada', {
-    title: 'Staðan',
+	return res.render('stada', {
+		title: 'Staðan',
 		time: new Date().toISOString(),
-  });
+	});
 }
 
 indexRouter.get('/', indexRoute);
