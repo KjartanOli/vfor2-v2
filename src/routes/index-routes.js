@@ -23,6 +23,7 @@ async function leikirRoute(req, res) {
 async function stadaRoute(req, res) {
   return res.render('stada', {
     title: 'Staðan',
+		time: new Date().toISOString(),
   });
 }
 
