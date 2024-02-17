@@ -4,6 +4,16 @@ import { insertGame } from '../lib/db.js';
 
 export const adminRouter = express.Router();
 
+function ensureLoggedIn(req, res, next) {
+  if (req.url === '/login' || req.isAuthenticated()) {
+    return next();
+  }
+
+  return res.redirect('/login');
+}
+
+adminRouter.use(ensureLoggedIn);
+
 async function indexRoute(req, res) {
   return res.render('login', {
     title: 'Innskráning',
@@ -19,17 +29,6 @@ async function adminRoute(req, res) {
     user,
     loggedIn,
   });
-}
-
-// TODO færa á betri stað
-// Hjálpar middleware sem athugar hvort notandi sé innskráður og hleypir okkur
-// þá áfram, annars sendir á /login
-function ensureLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-
-  return res.redirect('/login');
 }
 
 function skraRoute(req, res, next) {
