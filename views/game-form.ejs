@@ -1,7 +1,23 @@
-<form action="<%= game ? `/update/${game.id}` : '/skra' %>">
+<%
+function dateToString(date) {
+	return date.toISOString().substring(0, 'yyyy-mm-dd'.length);
+}
+
+function dateBackMonths(date, months) {
+	let t = new Date(date);
+	t.setMonth(t.getMonth() - months);
+	return t;
+}
+%>
+<form action="<%= game ? `/update/${game.id}` : '/skra' %>" method="post">
 	<legend><%= game ? 'Breyta leik' : 'Skrá leik' %></legend>
 	<label for="date">Dagsetning: </label>
-	<input name="date" type="date" value=""/>
+	<input name="date"
+		   type="date"
+		   value="<%= dateToString(time) %>"
+		   min="<%= dateToString(dateBackMonths(time, 2)) %>"
+		   max="<%= dateToString(time) %>"
+		   required />
 
 	<fieldset>
 		<legend>Heima</legend>
@@ -12,7 +28,7 @@
 			<% } %>
 		</select>
 		<label for="home_score">Stig: </label>
-		<input name="home_score" type="number" value="0"/>
+		<input name="home_score" type="number" value="0" min="0" required />
 	</fieldset>
 	<fieldset>
 		<legend>Gestir</legend>
@@ -23,7 +39,7 @@
 			<% } %>
 		</select>
 		<label for="away_score">Stig: </label>
-		<input name="away_score" type="number" value="0"/>
+		<input name="away_score" type="number" value="0" min="0" required/>
 	</fieldset>
-	<input name="submit" type="submit" value="Vista"/>
+	<input name="submit" type="submit" value="Skrá"/>
 </form>
