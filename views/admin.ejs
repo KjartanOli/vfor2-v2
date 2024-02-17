@@ -1,5 +1,7 @@
 <%- include('header') -%>
 
-admin!
+<%- include('game-form', { game: null, teams: locals.teams })%>
+
+<%- include('game-table', {games: locals.games, admin: true })%>
 
 <%- include('footer') -%>
