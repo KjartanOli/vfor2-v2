@@ -1,0 +1,29 @@
+<form action="<%= game ? `/update/${game.id}` : '/skra' %>">
+	<legend><%= game ? 'Breyta leik' : 'Skrá leik' %></legend>
+	<label for="date">Dagsetning: </label>
+	<input name="date" type="date" value=""/>
+
+	<fieldset>
+		<legend>Heima</legend>
+		<label for="home">Lið: </label>
+		<select id="home" name="home">
+			<% for (const team of teams) { %>
+				<option value="<%= team.id  %>"><%= team.name %></option>
+			<% } %>
+		</select>
+		<label for="home_score">Stig: </label>
+		<input name="home_score" type="number" value="0"/>
+	</fieldset>
+	<fieldset>
+		<legend>Gestir</legend>
+		<label for="away">Lið: </label>
+		<select id="away" name="away">
+			<% for (const team of locals.teams) { %>
+				<option value="<%= team.id  %>"><%= team.name %></option>
+			<% } %>
+		</select>
+		<label for="away_score">Stig: </label>
+		<input name="away_score" type="number" value="0"/>
+	</fieldset>
+	<input name="submit" type="submit" value="Vista"/>
+</form>
