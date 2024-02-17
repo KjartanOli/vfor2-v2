@@ -6,7 +6,6 @@ export const indexRouter = express.Router();
 async function indexRoute(req, res) {
 	return res.render('index', {
 		title: 'Forsíða',
-		time: new Date().toISOString(),
 	});
 }
 
@@ -16,14 +15,12 @@ async function leikirRoute(req, res) {
 	return res.render('leikir', {
 		title: 'Leikir',
 		games,
-		time: new Date().toISOString(),
 	});
 }
 
 async function stadaRoute(req, res) {
 	return res.render('stada', {
 		title: 'Staðan',
-		time: new Date().toISOString(),
 	});
 }
 
