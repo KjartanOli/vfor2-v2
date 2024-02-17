@@ -65,6 +65,7 @@ export async function getGames() {
       teams AS home_team ON home_team.id = games.home
     LEFT JOIN
       teams AS away_team ON away_team.id = games.away
+    ORDER BY date DESC
   `;
 
   const result = await query(q);
