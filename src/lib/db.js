@@ -44,10 +44,7 @@ SELECT id, name
 FROM teams;
 `);
 
-	if (result && (result.rows?.length ?? 0) > 0)
-		return result.rows.map(row => ({ id: row.id, name: row.name }));
-	else
-		return [];
+	return (result?.rows ?? []).map(row => ({ id: row.id, name: row.name }));
 }
 
 function makeGame(row) {
@@ -109,15 +106,7 @@ export async function getGames() {
 
   const result = await query(q);
 
-  const games = [];
-  if (result && (result.rows?.length ?? 0) > 0) {
-    for (const row of result.rows) {
-      const game = makeGame(row);
-      games.push(game);
-    }
-
-    return games;
-  }
+	return (result?.rows ?? []).map(makeGame);
 }
 
 export function insertGame(home_name, home_score, away_name, away_score) {
