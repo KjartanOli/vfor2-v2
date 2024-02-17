@@ -65,6 +65,30 @@ function makeGame(row) {
 	}
 }
 
+export async function getGame(id) {
+	const result = await query(`
+    SELECT
+      games.id,
+      date,
+      home_team.name AS home_name,
+      home_score,
+      away_team.name AS away_name,
+      away_score
+    FROM
+      games
+    LEFT JOIN
+      teams AS home_team ON home_team.id = games.home
+    LEFT JOIN
+      teams AS away_team ON away_team.id = games.away
+    WHERE games.id = $1
+  `, [id]);
+
+	if (result && (result.rows?.length ?? 0) > 0)
+		return makeGame(result.rows[0]);
+	else
+		return null;
+}
+
 export async function getGames() {
   const q = `
     SELECT
