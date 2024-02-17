@@ -83,7 +83,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use((req, res, next) => {
-	res.locals.time = new Date().toISOString();
+	res.locals.time = new Date();
 	next();
 });
 app.use('/', indexRouter);
