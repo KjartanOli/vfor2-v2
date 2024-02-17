@@ -38,6 +38,18 @@ export async function query(q, values = []) {
   }
 }
 
+export async function getTeams() {
+	const result = await query(`
+SELECT id, name
+FROM teams;
+`);
+
+	if (result && (result.rows?.length ?? 0) > 0)
+		return result.rows.map(row => ({ id: row.id, name: row.name }));
+	else
+		return [];
+}
+
 export async function getGames() {
   const q = `
     SELECT
