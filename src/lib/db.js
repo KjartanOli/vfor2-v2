@@ -53,6 +53,7 @@ FROM teams;
 export async function getGames() {
   const q = `
     SELECT
+      games.id,
       date,
       home_team.name AS home_name,
       home_score,
