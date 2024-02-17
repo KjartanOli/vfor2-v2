@@ -50,6 +50,21 @@ FROM teams;
 		return [];
 }
 
+function makeGame(row) {
+	return {
+		id: row.id,
+		date: row.date,
+    home: {
+      name: row.home_name,
+      score: row.home_score,
+    },
+    away: {
+      name: row.away_name,
+      score: row.away_score,
+    }
+	}
+}
+
 export async function getGames() {
   const q = `
     SELECT
@@ -73,17 +88,7 @@ export async function getGames() {
   const games = [];
   if (result && (result.rows?.length ?? 0) > 0) {
     for (const row of result.rows) {
-      const game = {
-        date: row.date,
-        home: {
-          name: row.home_name,
-          score: row.home_score,
-        },
-        away: {
-          name: row.away_name,
-          score: row.away_score,
-        },
-      };
+      const game = makeGame(row);
       games.push(game);
     }
 
