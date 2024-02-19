@@ -54,7 +54,6 @@ async function skraRouteInsert(req, res, next) {
 	min_date.setMonth(min_date.getMonth() - 2);
 	const today = new Date();
 
-	console.log(home, away);
 	if (home === away) {
 		next(Error('Home and Away can not be the same team'));
 		return;
@@ -91,13 +90,10 @@ async function skraRouteInsert(req, res, next) {
 }
 
 function editRoute(req, res) {
-	console.log(req.params);
 	const id = parseInt(req.params.id);
 
 	const teams = getTeams();
 	const game = getGame(id);
-
-	console.log(game);
 
 	return res.render('edit', {
 		title: 'Breyta leik',
