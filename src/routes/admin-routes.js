@@ -5,7 +5,7 @@ import { insertGame, getTeams, getTeam, getGames, getGame } from '../lib/db.js';
 export const adminRouter = express.Router();
 
 function ensureLoggedIn(req, res, next) {
-	if (req.url === '/login' || req.isAuthenticated()) {
+	if (req.url === '/login' || req.url === '/styles.css' || req.isAuthenticated()) {
 		return next();
 	}
 
