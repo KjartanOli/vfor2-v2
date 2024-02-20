@@ -14,3 +14,11 @@ CREATE TABLE IF NOT EXISTS public.games (
   CONSTRAINT fk_teams_home FOREIGN KEY (home) REFERENCES teams (id),
   CONSTRAINT fk_teams_away FOREIGN KEY (away) REFERENCES teams (id)
 );
+
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(60) NOT NULL UNIQUE,
+  name VARCHAR(60) NOT NULL,
+  password CHAR(60) NOT NULL,
+  admin BOOLEAN DEFAULT false
+);
