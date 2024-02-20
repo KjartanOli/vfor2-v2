@@ -85,7 +85,7 @@ form > label > input {
     margin-left: 0.5rem;
 }
 
-form > input[type="submit"], form > button {
+form > button {
     flex-grow: 0;
     align-self: flex-end;
     width: auto;
@@ -109,7 +109,7 @@ menu > li {
     margin-right: 1rem;
 }
 
-.action > input[type="submit"], .action > button {
+.action > button {
     all: unset;
 }
 
