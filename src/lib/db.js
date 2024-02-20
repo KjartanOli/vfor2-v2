@@ -38,6 +38,18 @@ export async function query(q, values = []) {
   }
 }
 
+export async function getTeam(id) {
+	const result = await query(`
+SELECT id, name
+FROM teams
+WHERE id = $1`, [id]);
+
+	if (result && (result.rows?.length ?? 0) > 0)
+		return  result.rows[0].id;
+	else
+		return null;
+}
+
 export async function getTeams() {
 	const result = await query(`
 SELECT id, name
