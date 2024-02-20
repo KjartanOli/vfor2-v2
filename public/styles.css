@@ -1,3 +1,108 @@
 html {
-  background-color: #f5f5f5;
+    background-color: #f5f5f5;
+    box-sizing: border-box;
+}
+
+body {
+    max-width: 1200px;
+    padding: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+nav > ul {
+    padding: 0;
+    list-style: none;
+}
+
+nav > ul > li {
+    display: inline-block;
+}
+
+header > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+header > div > p, header > div > a {
+    flex-grow: 0;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+thead tr th {
+    border-bottom: solid black 2px;
+}
+
+td, th {
+    padding: 0.2rem;
+}
+
+td > time {
+    font-family: monospace;
+}
+
+form {
+    padding: 0.5rem;
+    border: 1px solid black;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+form > legend {
+    font-size: 1.25rem;
+    font-weight: ;
+}
+
+form > fieldset {
+    display: inline-block;
+    max-width: fit-content;
+}
+
+form > * {
+    margin-bottom: 1rem;
+}
+
+form > input[type="submit"] {
+    flex-grow: 0;
+    align-self: flex-end;
+    width: auto;
+}
+
+tbody > tr:nth-child(even) {
+    background-color: lightgrey;
+}
+
+.centre {
+    text-align: center;
+}
+
+menu {
+    list-style: none;
+    display: flex;
+    padding: unset;
+}
+
+menu > li {
+    margin-right: 1rem;
+}
+
+.action {
+    all: unset;
+    background-color: royalblue;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.action:hover {
+    cursor: pointer;
+}
+
+.danger {
+    background-color: darkred;
 }

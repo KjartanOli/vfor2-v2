@@ -8,18 +8,21 @@
 </head>
 
 <body>
-  <main>
-
-    <h1><%= locals.title ?? '' %></h1>
-
-    <% if (locals.loggedIn) { %>
-      <p>Innsrkáður notandi: <%= locals.user.name %> (<%= locals.user.username %>)
-    <% } else { %>
-      <p>Þú ert ekki innskráður notandi.</p>
-    <% } %>
-
-    <ul>
-      <li><a href="/">Forsíða</a></li>
-      <li><a href="/leikir">Leikir</a></li>
-      <li><a href="/stada">Staða</a></li>
-    </ul>
+	<header>
+		<h1><%= locals.title ?? '' %></h1>
+		<div>
+			<nav>
+				<ul>
+					<li><a href="/">Forsíða</a></li>
+					<li><a href="/leikir">Leikir</a></li>
+					<li><a href="/stada">Staða</a></li>
+				</ul>
+			</nav>
+			<% if (locals.loggedIn) { %>
+				<p>Innskáður notandi: <%= locals.user.name %> (<%= locals.user.username %>)
+			<% } else { %>
+					<a href="/login">Innskrá</a>
+			<% } %>
+		</div>
+	</header>
+	<main>

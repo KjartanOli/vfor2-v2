@@ -3,24 +3,29 @@
 		<tr>
 			<th>Dagsetning</th>
 			<th>Heima lið</th>
-			<th>Heima lið skor</th>
+			<th>Skor</th>
 			<th>Útilið</th>
-			<th>Útilið skor</th>
+			<th>Skor</th>
 			<% if (admin) { %>
-				<th>Breyta</th>
+				<th>Aðgerðir</th>
 			<% } %>
 		</tr>
 	</thead>
 	<tbody>
 		<% for (const game of games) { %>
 			<tr>
-				<td><%= game.date.toDateString() %></td>
+				<td class="right"><time datetime="<%=game.date.toISOString()%>"><%= game.date.toDateString() %></time></td>
 				<td><%= game.home.name %></td>
-				<td><%= game.home.score %></td>
+				<td class="centre"><%= game.home.score %></td>
 				<td><%= game.away.name %></td>
-				<td><%= game.away.score %></td>
+				<td class="centre"><%= game.away.score %></td>
 				<% if (admin) { %>
-					<td><a href="<%= `/admin/edit/${game.id}` %>">Breyta</a></td>
+					<td>
+						<menu>
+							<li><a class="action" href="<%= `/admin/edit/${game.id}` %>">Breyta</a></li>
+							<li><a class="danger action" href="/delete/<%= game.id %>">Eyða</a></li>
+						</menu>
+					</td>
 				<% } %>
 			</tr>
 		<% } %>
