@@ -16,6 +16,9 @@
 					<li><a href="/">Forsíða</a></li>
 					<li><a href="/leikir">Leikir</a></li>
 					<li><a href="/stada">Staða</a></li>
+					<% if (locals.loggedIn) { %>
+						<li><a href="/admin">Umsjón</a></li>
+					<% } %>
 				</ul>
 			</nav>
 			<% if (locals.loggedIn) { %>
