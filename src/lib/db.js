@@ -94,8 +94,8 @@ export async function getGame(id) {
 
 	if (result && (result.rows?.length ?? 0) > 0)
 		return makeGame(result.rows[0]);
-	else
-		return null;
+
+	return null;
 }
 
 export async function getGames() {
