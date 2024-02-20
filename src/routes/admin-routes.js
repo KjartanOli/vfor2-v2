@@ -1,6 +1,6 @@
 import express from 'express';
 import passport from 'passport';
-import { insertGame, getTeams, getTeam, getGames, getGame } from '../lib/db.js';
+import { insertGame, getTeams, getTeam, getGames, getGame, updateGame, deleteGame } from '../lib/db.js';
 
 export const adminRouter = express.Router();
 
@@ -42,6 +42,32 @@ function skraRoute(req, res, next) {
 	});
 }
 
+async function validateGame(date, home, home_score, away, away_score) {
+	const min_date = new Date();
+	min_date.setMonth(min_date.getMonth() - 2);
+	const today = new Date();
+
+	if (home === away)
+		return 'Heimalið og útilið geta ekki verið sama liðið';
+
+	if (date < min_date || date > today)
+		return 'Ógild dagsetning';
+
+	if (home_score < 0)
+		return 'Markatala heimaliðs getur ekki verið neikvæð'
+
+	if (away_score < 0)
+		return 'Markatala útiliðs getur ekki verið neikvæð';
+
+	if (!(await getTeam(home)))
+		return 'Heimalið er ekkk til';
+
+	if (!(await getTeam(away)))
+		return 'Útilið er ekki til';
+
+	return null;
+}
+
 async function skraRouteInsert(req, res, next) {
 	const date = new Date(req.body.date);
 	const home = parseInt(req.body.home, 10);
@@ -49,50 +75,24 @@ async function skraRouteInsert(req, res, next) {
 	const away = parseInt(req.body.away, 10);
 	const away_score = parseInt(req.body.away_score, 10);
 
-	let min_date = new Date();
-	min_date.setMonth(min_date.getMonth() - 2);
-	const today = new Date();
+	const error = await validateGame(date, home, home_score, away, away_score);
 
-	if (home === away) {
-		next(Error('Home and Away can not be the same team'));
-		return;
-	}
-
-	if (date < min_date || date > today) {
-		next(Error('Invalid date'));
-		return;
-	}
-
-	if (home_score < 0) {
-		next(Error('Home score can not be negative'));
-		return;
-	}
-
-	if (away_score < 0) {
-		next(Error('Away score can not be negative'));
-		return;
-	}
-
-	if (!(await getTeam(home))) {
-		next(Error('Home team does not exist'));
-		return;
-	}
-
-	if (!(await getTeam(away))) {
-		next(Error('Away team does not exist'));
-		return;
-	}
+	if (error)
+		return next(error);
 
 	const result = insertGame(date, home, home_score, away, away_score);
 
 	res.redirect('/admin');
 }
 
-function editRoute(req, res) {
+async function editRoute(req, res, next) {
 	const id = parseInt(req.params.id, 10);
 
-	const teams = getTeams();
-	const game = getGame(id);
+	const game = await getGame(id);
+	if (!game)
+		return next(Error('Leikur er ekki til'));
+
+	const teams = await getTeams();
 
 	return res.render('edit', {
 		title: 'Breyta leik',
@@ -101,14 +101,47 @@ function editRoute(req, res) {
 	});
 }
 
-function editRouteInsert(req, res) { }
+async function editRouteInsert(req, res, next) {
+	const id = parseInt(req.params.id, 10);
+
+	const game = await getGame(id);
+	if (!game)
+		return next(Error('Leikur er ekki til'));
+
+	const date = new Date(req.body.date);
+	const home = parseInt(req.body.home, 10);
+	const home_score = parseInt(req.body.home_score, 10);
+	const away = parseInt(req.body.away, 10);
+	const away_score = parseInt(req.body.away_score, 10);
+
+	const error = await validateGame(date, home, home_score, away, away_score);
+
+	if (error)
+		return next(error);
+
+	updateGame(id, date, home, home_score, away, away_score);
+
+	return res.redirect('/admin');
+}
+
+async function deleteRoute(req, res, next) {
+		const id = parseInt(req.params.id, 10);
+
+	const game = await getGame(id);
+	if (!game)
+		return next(Error('Leikur er ekki til'));
+
+	deleteGame(id);
+	return res.redirect('/admin');
+}
 
 adminRouter.get('/login', indexRoute);
 adminRouter.get('/admin', ensureLoggedIn, adminRoute);
 adminRouter.get('/skra', skraRoute);
 adminRouter.post('/skra', skraRouteInsert);
-adminRouter.get('/edit/:id(\\d+)', editRoute);
-adminRouter.post('/edit/:id(\\d+)', editRouteInsert);
+adminRouter.get('/admin/edit/:id(\\d+)', editRoute);
+adminRouter.post('/admin/edit/:id(\\d+)', editRouteInsert);
+adminRouter.post('/admin/delete/:id(\\d+)', deleteRoute);
 
 adminRouter.post(
 	'/login',

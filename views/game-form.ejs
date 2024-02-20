@@ -9,12 +9,12 @@ function dateBackMonths(date, months) {
 	return t;
 }
 %>
-<form action="<%= game ? `/update/${game.id}` : '/skra' %>" method="post">
+<form action="<%= game ? `/admin/edit/${game.id}` : '/skra' %>" method="post">
 	<legend><%= game ? 'Breyta leik' : 'Skrá leik' %></legend>
 	<label for="date">Dagsetning:
 		<input name="date"
 			   type="date"
-			   value="<%= dateToString(time) %>"
+			   value="<%= dateToString(game?.date ?? time) %>"
 			   min="<%= dateToString(dateBackMonths(time, 2)) %>"
 			   max="<%= dateToString(time) %>"
 			   required />
@@ -25,12 +25,19 @@ function dateBackMonths(date, months) {
 		<label for="home">Lið:
 			<select id="home" name="home">
 				<% for (const team of teams) { %>
-					<option value="<%= team.id  %>"><%= team.name %></option>
+					<option value="<%= team.id  %>"
+						<%= team.id === game?.home?.id ? 'selected' : ''%> >
+						<%= team.name %>
+					</option>
 				<% } %>
 			</select>
 		</label>
 		<label for="home_score">Stig:
-			<input name="home_score" type="number" value="0" min="0" required />
+			<input name="home_score"
+				   type="number"
+				   value="<%= game?.home?.score ?? 0%>"
+				   min="0"
+				   required />
 		</label>
 	</fieldset>
 	<fieldset>
@@ -38,12 +45,19 @@ function dateBackMonths(date, months) {
 		<label for="away">Lið:
 			<select id="away" name="away">
 				<% for (const team of locals.teams) { %>
-					<option value="<%= team.id  %>"><%= team.name %></option>
+					<option value="<%= team.id  %>"
+						<%= team.id === game?.away?.id ? 'selected' : ''%>>
+						<%= team.name %>
+					</option>
 				<% } %>
 			</select>
 		</label>
 		<label for="away_score">Stig:
-			<input name="away_score" type="number" value="0" min="0" required/>
+			<input name="away_score"
+				   type="number"
+				   value="<%= game?.away?.score ?? 0%>"
+				   min="0"
+				   required/>
 		</label>
 	</fieldset>
 	<input name="submit" type="submit" value="Skrá"/>

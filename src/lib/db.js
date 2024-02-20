@@ -87,10 +87,12 @@ function makeGame(row) {
 		id: row.id,
 		date: row.date,
     home: {
+			id: row.home_id,
       name: row.home_name,
       score: row.home_score,
     },
     away: {
+			id: row.away_id,
       name: row.away_name,
       score: row.away_score,
     }
@@ -102,8 +104,10 @@ export async function getGame(id) {
     SELECT
       games.id,
       date,
+      home_team.id AS home_id,
       home_team.name AS home_name,
       home_score,
+      away_team.id AS away_id,
       away_team.name AS away_name,
       away_score
     FROM
@@ -126,8 +130,10 @@ export async function getGames() {
     SELECT
       games.id,
       date,
+      home_team.id AS home_id,
       home_team.name AS home_name,
       home_score,
+      away_team.id AS away_id,
       away_team.name AS away_name,
       away_score
     FROM
@@ -149,6 +155,25 @@ export function insertGame(date, home, home_score, away, away_score) {
     'insert into games (date, home, away, home_score, away_score) values ($1, $2, $3, $4, $5);';
 
   const result = query(q, [date, home, away, home_score, away_score]);
+}
+
+export function updateGame(id, date, home, home_score, away, away_score) {
+	query(`
+UPDATE games
+SET
+  date = $2,
+  home = $3,
+  home_score = $4,
+  away = $5,
+  away_score = $6
+WHERE id = $1`,
+		[id, date, home, home_score, away, away_score]);
+}
+
+export function deleteGame(id) {
+	query(`
+DELETE FROM games
+WHERE id = $1`, [id]);
 }
 
 export async function end() {
