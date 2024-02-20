@@ -58,6 +58,7 @@ form {
     border: 1px solid black;
     margin-top: 1rem;
     margin-bottom: 1rem;
+    width: fit-content;
 }
 
 form > legend {
@@ -74,7 +75,17 @@ form > * {
     margin-bottom: 1rem;
 }
 
-form > input[type="submit"] {
+form > label {
+    display: inline-flex;
+    justify-content: space-between;
+    width: auto;
+}
+
+form > label > input {
+    margin-left: 0.5rem;
+}
+
+form > input[type="submit"], form > button {
     flex-grow: 0;
     align-self: flex-end;
     width: auto;
