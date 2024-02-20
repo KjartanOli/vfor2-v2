@@ -43,7 +43,6 @@ function skraRoute(req, res, next) {
 }
 
 async function skraRouteInsert(req, res, next) {
-	// TODO mjög hrátt allt saman, vantar validation!
 	const date = new Date(req.body.date);
 	const home = parseInt(req.body.home, 10);
 	const home_score = parseInt(req.body.home_score, 10);
