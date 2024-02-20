@@ -89,7 +89,7 @@ async function skraRouteInsert(req, res, next) {
 }
 
 function editRoute(req, res) {
-	const id = parseInt(req.params.id);
+	const id = parseInt(req.params.id, 10);
 
 	const teams = getTeams();
 	const game = getGame(id);
