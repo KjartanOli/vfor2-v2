@@ -109,6 +109,10 @@ menu > li {
     cursor: pointer;
 }
 
+.action:focus, .action:focus-within {
+    border: 2px solid black;
+}
+
 .danger {
     background-color: darkred;
 }
