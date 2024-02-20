@@ -23,7 +23,11 @@
 					<td>
 						<menu>
 							<li><a class="action" href="<%= `/admin/edit/${game.id}` %>">Breyta</a></li>
-							<li><a class="danger action" href="/delete/<%= game.id %>">Eyða</a></li>
+							<li>
+								<form class="danger action" action="/delete/<%= game.id %>" method="post">
+									<input type="submit" value="Eyða" />
+								</form>
+							</li>
 						</menu>
 					</td>
 				<% } %>

@@ -46,6 +46,8 @@ td > time {
 }
 
 form {
+    display: flex;
+    flex-direction: column;
     padding: 0.5rem;
     border: 1px solid black;
     margin-top: 1rem;
@@ -88,6 +90,10 @@ menu {
 
 menu > li {
     margin-right: 1rem;
+}
+
+.action > input[type="submit"] {
+    all: unset;
 }
 
 .action {
