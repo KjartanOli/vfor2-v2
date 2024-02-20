@@ -38,6 +38,29 @@ export async function query(q, values = []) {
   }
 }
 
+export async function getStandings() {
+	const result = await query(`
+SELECT
+  t.id,
+  t.name,
+  (SELECT
+    (SELECT 3 * COUNT(id)
+     FROM games
+     WHERE
+        (home = t.id AND home_score > away_score)
+     OR (away = t.id AND away_score > home_score))
+  + (SELECT COUNT(id)
+     FROM games
+     WHERE (home = 1 OR away = 1)
+     AND home_score = away_score)) AS score
+FROM teams t
+GROUP BY t.id
+ORDER by score DESC;
+`);
+
+	return result?.rows ?? [];
+}
+
 export async function getTeam(id) {
 	const result = await query(`
 SELECT id, name

@@ -1,0 +1,16 @@
+<table>
+    <thead>
+        <tr>
+            <th>Lið</th>
+            <th>Stig</th>
+        </tr>
+    </thead>
+    <tbody>
+		<% for (const team of standings) { %>
+			<tr>
+				<td><%= team.name %></td>
+				<td><%= team.score %></td>
+			</tr>
+		<% } %>
+	</tbody>
+</table>
