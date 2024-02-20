@@ -19,7 +19,10 @@
 				</ul>
 			</nav>
 			<% if (locals.loggedIn) { %>
-				<p>Innskáður notandi: <%= locals.user.name %> (<%= locals.user.username %>)
+				<div>
+					<p>Innskáður notandi: <%= locals.user.name %> (<%= locals.user.username %>)</p>
+					<form class="action" action="/logout" method="post"><button>Skrá út</button></form>
+				</div>
 			<% } else { %>
 					<a href="/login">Innskrá</a>
 			<% } %>

@@ -20,6 +20,14 @@ async function indexRoute(req, res) {
 	});
 }
 
+function logoutRoute(req, res, next) {
+	req.logout((err) => {
+		if (err)
+			next(err)
+		return res.redirect('/');
+	});
+}
+
 async function adminRoute(req, res) {
 	const user = req.user ?? null;
 	const loggedIn = req.isAuthenticated();
@@ -136,6 +144,7 @@ async function deleteRoute(req, res, next) {
 }
 
 adminRouter.get('/login', indexRoute);
+adminRouter.post('/logout', logoutRoute);
 adminRouter.get('/admin', ensureLoggedIn, adminRoute);
 adminRouter.get('/skra', skraRoute);
 adminRouter.post('/skra', skraRouteInsert);
