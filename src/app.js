@@ -84,6 +84,8 @@ app.use(passport.session());
 
 app.use((req, res, next) => {
 	res.locals.time = new Date();
+	res.locals.loggedIn = req.isAuthenticated();
+	res.locals.user = req.user ?? null;
 	next();
 });
 app.use('/', indexRouter);

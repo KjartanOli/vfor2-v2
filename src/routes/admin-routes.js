@@ -29,18 +29,13 @@ function logoutRoute(req, res, next) {
 }
 
 async function adminRoute(req, res) {
-	const user = req.user ?? null;
-	const loggedIn = req.isAuthenticated();
-
 	const teams = await getTeams();
 	const games = await getGames();
 
 	return res.render('admin', {
 		title: 'Admin upplýsingar, mjög leynilegt',
-		user,
 		teams,
 		games,
-		loggedIn,
 	});
 }
 
