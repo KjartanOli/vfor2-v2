@@ -13,25 +13,7 @@
 	</thead>
 	<tbody>
 		<% for (const game of games) { %>
-			<tr>
-				<td class="right"><time datetime="<%=game.date.toISOString()%>"><%= game.date.toDateString() %></time></td>
-				<td><%= game.home.name %></td>
-				<td class="centre"><%= game.home.score %></td>
-				<td><%= game.away.name %></td>
-				<td class="centre"><%= game.away.score %></td>
-				<% if (admin) { %>
-					<td>
-						<menu>
-							<li><a class="action" href="<%= `/admin/edit/${game.id}` %>">Breyta</a></li>
-							<li>
-								<form class="danger action" action="/delete/<%= game.id %>" method="post">
-									<button>Eyða</button>
-								</form>
-							</li>
-						</menu>
-					</td>
-				<% } %>
-			</tr>
+			<%- include('game-row', { game })%>
 		<% } %>
 	</tbody>
 </table>
