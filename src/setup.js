@@ -25,17 +25,18 @@ async function main() {
 		},
 	];
 
+	await Promise.all(teams.map(team => query(`
+INSERT INTO teams(name)
+ VALUES($1);`,
+		[team])
+	));
+
 	await Promise.all([
 		Promise.all(users.map(user =>
 			query(`
 INSERT INTO users(id, username, name, password, admin)
  VALUES ($1, $2, $3, $4, $5)`,
 				[user.id, user.username, user.name, user.password, user.admin])
-		)),
-		Promise.all(teams.map(team => query(`
-INSERT INTO teams(name)
- VALUES($1);`,
-			[team])
 		)),
 		Promise.all(gamedays.map(day =>
 			Promise.all(day.games.map(async game => {
