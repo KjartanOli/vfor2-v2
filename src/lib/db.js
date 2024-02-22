@@ -69,8 +69,8 @@ WHERE id = $1`, [id]);
 
 	if (result && (result.rows?.length ?? 0) > 0)
 		return  result.rows[0].id;
-	else
-		return null;
+
+	return null;
 }
 
 export async function getTeams() {
@@ -154,7 +154,7 @@ export function insertGame(date, home, home_score, away, away_score) {
   const q =
     'insert into games (date, home, away, home_score, away_score) values ($1, $2, $3, $4, $5);';
 
-  const result = query(q, [date, home, away, home_score, away_score]);
+  query(q, [date, home, away, home_score, away_score]);
 }
 
 export function updateGame(id, date, home, home_score, away, away_score) {

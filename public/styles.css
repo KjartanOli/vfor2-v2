@@ -15,6 +15,10 @@ nav > ul {
     list-style: none;
 }
 
+menu > li {
+    margin-right: 1rem;
+}
+
 nav > ul > li {
     display: inline-block;
 }
@@ -39,12 +43,12 @@ table {
     border-collapse: collapse;
 }
 
-thead tr th {
-    border-bottom: solid black 2px;
-}
-
 td, th {
     padding: 0.2rem;
+}
+
+thead tr th {
+    border-bottom: solid black 2px;
 }
 
 td > time {
@@ -103,10 +107,6 @@ menu {
     list-style: none;
     display: flex;
     padding: unset;
-}
-
-menu > li {
-    margin-right: 1rem;
 }
 
 .action > button {

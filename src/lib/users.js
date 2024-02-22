@@ -6,7 +6,7 @@
  */
 
 import bcrypt from 'bcrypt';
-import { query } from '../lib/db.js'
+import { query } from './db.js'
 
 export async function comparePasswords(password, user) {
   const ok = await bcrypt.compare(password, user.password);

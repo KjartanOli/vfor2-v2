@@ -1,6 +1,14 @@
 import express from 'express';
 import passport from 'passport';
-import { insertGame, getTeams, getTeam, getGames, getGame, updateGame, deleteGame } from '../lib/db.js';
+import {
+	insertGame,
+	getTeams,
+	getTeam,
+	getGames,
+	getGame,
+	updateGame,
+	deleteGame
+} from '../lib/db.js';
 
 export const adminRouter = express.Router();
 
@@ -36,12 +44,6 @@ async function adminRoute(req, res) {
 		title: 'Admin upplýsingar, mjög leynilegt',
 		teams,
 		games,
-	});
-}
-
-function skraRoute(req, res, next) {
-	return res.render('skra', {
-		title: 'Skrá leik',
 	});
 }
 
@@ -83,9 +85,9 @@ async function skraRouteInsert(req, res, next) {
 	if (error)
 		return next(error);
 
-	const result = insertGame(date, home, home_score, away, away_score);
+	insertGame(date, home, home_score, away, away_score);
 
-	res.redirect('/admin');
+	return res.redirect('/admin');
 }
 
 async function editRoute(req, res, next) {
@@ -128,7 +130,7 @@ async function editRouteInsert(req, res, next) {
 }
 
 async function deleteRoute(req, res, next) {
-		const id = parseInt(req.params.id, 10);
+	const id = parseInt(req.params.id, 10);
 
 	const game = await getGame(id);
 	if (!game)
@@ -141,7 +143,6 @@ async function deleteRoute(req, res, next) {
 adminRouter.get('/login', indexRoute);
 adminRouter.post('/logout', logoutRoute);
 adminRouter.get('/admin', ensureLoggedIn, adminRoute);
-adminRouter.get('/skra', skraRoute);
 adminRouter.post('/skra', skraRouteInsert);
 adminRouter.get('/admin/edit/:id(\\d+)', editRoute);
 adminRouter.post('/admin/edit/:id(\\d+)', editRouteInsert);
